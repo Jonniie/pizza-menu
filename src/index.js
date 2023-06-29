@@ -10,6 +10,7 @@ function App() {
       <Header />
       <Menu />
       <Footer />
+      <span>Made with ❤️ by JonnieDev</span>
     </div>
   );
 }
@@ -26,37 +27,66 @@ function Menu() {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <div className="pizzas">
-        {pizzaData.map((pizzaInfo) => {
-          return (
-            <Pizza
-              name={pizzaInfo.name}
-              photo={pizzaInfo.photoName}
-              ingredients={pizzaInfo.ingredients}
-              price={pizzaInfo.price}
-            />
-          );
-        })}
-      </div>
+      {pizzaData && (
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creative dishes to chose from. All from
+            our stone oven, all organic, cohlesterol free and all delicious.
+          </p>
+
+          <ul className="pizzas">
+            {pizzaData.map((pizzaInfo) => {
+              return (
+                <Pizza
+                  key={pizzaInfo.name}
+                  name={pizzaInfo.name}
+                  photo={pizzaInfo.photoName}
+                  ingredients={pizzaInfo.ingredients}
+                  price={pizzaInfo.price}
+                  soldOut={pizzaInfo.soldOut}
+                />
+              );
+            })}
+          </ul>
+        </>
+      )}
     </main>
   );
 }
 
-function Pizza({ name, photo, ingredients, price }) {
+function Pizza({ name, photo, ingredients, price, soldOut }) {
+  const pizzaStatus = !soldOut ? `$${price}` : "SOLD OUT";
   return (
-    <div className="">
+    <li className={`pizza ${soldOut && "sold-out"}`}>
       <img src={photo} alt={name} />
-      <h3>{name}</h3>
-      <p>{ingredients}</p>
-      <p>{price}</p>
-    </div>
+      <div>
+        <h3>{name}</h3>
+        <p>{ingredients}</p>
+        <span>{pizzaStatus}</span>
+      </div>
+    </li>
   );
 }
 
 function Footer() {
+  const hour = new Date().getHours();
+  const openHr = 8;
+  const closeHr = 20;
+  const isOpen = hour >= openHr && hour <= closeHr;
+
   return (
     <footer className="footer">
-      {new Date().toLocaleDateString()}. We are currently open!
+      {isOpen ? (
+        <div className="order">
+          <p>We are open until {closeHr}:00</p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <p>
+          We are cooking! We are happy to welcome you back in{" "}
+          {Math.abs(hour - openHr)}hrs...
+        </p>
+      )}
     </footer>
   );
 }
