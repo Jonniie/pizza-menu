@@ -4,7 +4,6 @@ import pizzaData from "./data";
 import "./index.css";
 
 function App() {
-  console.log(pizzaData[0]);
   return (
     <div className="container">
       <Header />
