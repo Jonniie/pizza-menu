@@ -15,7 +15,6 @@ body {
   color: #252525;
   font-weight: 400;
   background-color: #f7f2e9;
-  border-bottom: 1.6rem solid #edc84b;
   min-height: 100vh;
   padding: 3.2rem;
   padding-bottom: 6rem;
@@ -44,7 +43,8 @@ body {
 
   text-transform: uppercase;
   text-align: center;
-  font-size: 5.2rem;
+  font-size: 3.6rem;
+  font-size: clamp(3.6rem, 3.2800000000000002rem + 1.6vw, 5.2rem);
   font-weight: 300;
   letter-spacing: 3px;
   position: relative;
@@ -103,6 +103,13 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4.8rem;
+}
+
+@media screen and (max-width: 600px) {
+  .pizzas {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .pizza {
